@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Nexora • Premium Earning App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Nexora • Account Reactivation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,551 +15,424 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(145deg, #fef7e0, #fff5e8);
-            color: #1e2f3e;
-            overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
-            touch-action: pan-y; /* prevent zoom */
-        }
-        body {
-            -webkit-text-size-adjust: none;
-            text-size-adjust: none;
-        }
-        .auth-screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, #0e3a33, #062a25);
+            background: radial-gradient(circle at 20% 30%, #eef2f9, #e0e7f0);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 2000;
+            justify-content: center;
+            padding: 20px;
         }
-        .auth-card {
-            background: rgba(255,255,255,0.96);
-            backdrop-filter: blur(20px);
+        /* premium card */
+        .reactivation-card {
+            max-width: 520px;
+            width: 100%;
+            background: #ffffff;
             border-radius: 44px;
-            padding: 28px 20px;
-            width: 90%;
-            max-width: 340px;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        .reactivation-card:hover {
+            transform: translateY(-3px);
+        }
+        /* header with small icon */
+        .card-header {
+            padding: 32px 32px 16px;
             text-align: center;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+            border-bottom: 1px solid #f0f2f5;
         }
-        .auth-card h2 { font-size: 1.5rem; color: #0e3a33; margin-bottom: 6px; }
-        .auth-card p { color: #6c7a8a; margin-bottom: 20px; font-size: 0.8rem; }
-        .auth-card input {
-            width: 100%;
-            padding: 12px 16px;
-            margin: 6px 0;
-            background: #f8fafd;
-            border: 1px solid #eef2f8;
-            border-radius: 40px;
-            font-size: 0.85rem;
+        .icon-badge {
+            background: #fee2e2;
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
         }
-        .auth-btn {
-            background: linear-gradient(105deg, #ffb347, #ff8c1a);
-            border: none;
+        .icon-badge i {
+            font-size: 1.6rem;
+            color: #e74c3c;
+        }
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a2c3e;
+            letter-spacing: -0.3px;
+        }
+        .deactivated-tag {
+            display: inline-block;
+            background: #e74c3c;
             color: white;
-            font-weight: 800;
-            padding: 12px;
-            border-radius: 50px;
-            width: 100%;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 60px;
+            margin-top: 12px;
+            letter-spacing: 0.3px;
+        }
+        .message {
+            padding: 20px 32px 8px;
+            text-align: center;
+            color: #4a5b6e;
             font-size: 0.9rem;
+            line-height: 1.45;
+            font-weight: 500;
+        }
+        /* options container */
+        .options {
+            padding: 8px 24px 32px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #fafcff;
+            border: 1px solid #edf2f9;
+            border-radius: 36px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s;
             cursor: pointer;
-            margin-top: 14px;
-            box-shadow: 0 6px 14px rgba(255,140,26,0.3);
         }
-        .toggle-link { margin-top: 16px; color: #ff8c1a; font-weight: 600; cursor: pointer; font-size: 0.8rem; }
-        .auth-screen.hidden { display: none; }
-        .main-app { display: none; }
-        .main-app.visible { display: block; }
-        .app-header {
-            background: linear-gradient(135deg, #0e3a33, #062a25);
-            padding: 14px 14px 20px;
-            border-radius: 0 0 28px 28px;
-            box-shadow: 0 10px 20px -6px rgba(0,0,0,0.2);
+        .option-item:hover {
+            border-color: #ffcd94;
+            background: #fffefa;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
         }
-        .user-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .back-button {
-            background: rgba(255,255,240,0.2);
-            width: 30px; height: 30px;
-            border-radius: 30px;
+        .option-icon {
+            width: 44px;
+            height: 44px;
+            background: #fff5e8;
+            border-radius: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            margin-right: 8px;
+            flex-shrink: 0;
         }
-        .back-button i { font-size: 0.9rem; color: white; }
-        .greeting-wrapper { display: flex; align-items: center; flex: 1; }
-        .greeting-badge {
-            background: rgba(255,255,240,0.2);
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        .active-badge {
-            background: rgba(255,200,100,0.35);
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 800;
-            color: #ffdf99;
-        }
-        .balance-card {
-            background: linear-gradient(125deg, rgba(255,235,200,0.95), rgba(255,245,220,0.98));
-            backdrop-filter: blur(12px);
-            border-radius: 40px;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
-            border: 1px solid rgba(255,215,120,0.8);
-        }
-        .balance-number { font-size: 1.7rem; font-weight: 800; color: #e67e22; }
-        .balance-card i { font-size: 1.6rem; }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255,255,255,0.96);
-            backdrop-filter: blur(30px);
-            display: flex;
-            justify-content: space-around;
-            padding: 6px 12px 16px;
-            border-top: 1px solid rgba(0,0,0,0.04);
-            z-index: 1100;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: #8f9bb3;
-            cursor: pointer;
-        }
-        .nav-item i { font-size: 1.1rem; }
-        .nav-item.active { color: #f39c12; transform: translateY(-2px); }
-        .card-premium {
-            background: rgba(255,255,255,0.96);
-            border-radius: 28px;
-            padding: 14px;
-            margin-bottom: 14px;
-            box-shadow: 0 8px 16px -6px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,200,120,0.5);
-        }
-        .btn-gold {
-            background: linear-gradient(105deg, #ffb347, #ff8c1a);
-            border: none;
-            color: white;
-            font-weight: 800;
-            padding: 10px 16px;
-            border-radius: 44px;
-            width: 100%;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #ffb347;
+        .option-icon i {
+            font-size: 1.3rem;
             color: #e67e22;
-            padding: 8px 14px;
-            border-radius: 44px;
+        }
+        .option-content {
+            flex: 1;
+        }
+        .option-title {
+            font-weight: 800;
+            font-size: 1rem;
+            color: #1e2f3e;
+            margin-bottom: 4px;
+        }
+        .option-desc {
+            font-size: 0.7rem;
+            color: #7e8c9e;
+            line-height: 1.3;
+        }
+        .arrow-icon {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        /* footer */
+        .card-footer {
+            padding: 16px 32px 28px;
+            background: #fafcff;
+            border-top: 1px solid #f0f2f5;
             text-align: center;
-            cursor: pointer;
-            font-size: 0.8rem;
         }
-        .vip-card {
-            background: linear-gradient(125deg, #ffffff, #fffaf0);
-            border-radius: 24px;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-left: 4px solid #ffb347;
-        }
-        .stat-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.8rem; font-weight: 600; }
-        .offer-badge {
-            background: linear-gradient(95deg, #fff6e8, #fff0e0);
-            border-radius: 22px;
-            padding: 8px 12px;
-            margin-bottom: 8px;
+        .secure-note {
+            font-size: 0.65rem;
+            color: #8ba0b0;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            border-left: 3px solid #ffb347;
+            justify-content: center;
+            gap: 6px;
         }
+        /* MODAL styles – clean, small icons */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0,0,0,0.92);
-            backdrop-filter: blur(24px);
+            backdrop-filter: blur(20px);
             justify-content: center;
             align-items: center;
-            z-index: 2100;
+            z-index: 2000;
         }
-        .modal-card {
-            background: #ffffff;
-            max-width: 450px;
+        .modal-container {
+            background: white;
+            max-width: 440px;
             width: 90%;
             border-radius: 44px;
-            padding: 24px;
+            padding: 28px 24px;
             position: relative;
         }
         .modal-close {
             position: absolute;
-            top: 16px;
-            right: 20px;
-            font-size: 24px;
+            top: 20px;
+            right: 24px;
+            font-size: 22px;
             cursor: pointer;
-            color: #aaa;
+            color: #9aa9bb;
         }
-        input, select {
-            width: 100%;
-            padding: 10px 14px;
-            margin: 6px 0;
-            background: #f8fafd;
-            border: 1px solid #eef2f8;
-            border-radius: 40px;
-            font-size: 0.8rem;
-        }
-        .method-chip {
-            background: #f0f4fa;
-            padding: 6px 14px;
-            border-radius: 40px;
-            display: inline-block;
-            margin: 4px;
-            cursor: pointer;
-            font-size: 0.7rem;
-        }
-        .method-chip.active { background: #ffb347; color: white; }
-        .qr-box {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 12px;
+        .modal-header {
             text-align: center;
-            margin: 12px 0;
-            border: 2px dashed #ffcd94;
+            margin-bottom: 20px;
         }
-        .qr-img { width: 120px; height: 120px; object-fit: contain; margin: 0 auto; display: block; border-radius: 20px; }
-        .telegram-support {
-            position: fixed;
-            bottom: 75px;
-            right: 12px;
-            background: linear-gradient(135deg, #2ecc71, #25a25a);
-            width: 44px;
-            height: 44px;
-            border-radius: 44px;
+        .modal-icon {
+            background: #fff0e0;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 1200;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            margin: 0 auto 12px;
         }
-        .telegram-support i { font-size: 22px; color: white; }
+        .modal-icon i {
+            font-size: 1.3rem;
+            color: #e67e22;
+        }
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a2c3e;
+        }
+        .qr-wrapper {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .qr-img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            margin: 0 auto;
+            border-radius: 24px;
+            background: white;
+            padding: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .address-box {
+            background: #f5f7fb;
+            border-radius: 50px;
+            padding: 10px 16px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            word-break: break-all;
+            text-align: center;
+            margin: 16px 0;
+        }
+        .btn-copy {
+            background: transparent;
+            border: 1.5px solid #ffb347;
+            color: #e67e22;
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: auto;
+        }
+        .btn-action {
+            background: linear-gradient(95deg, #ffb347, #ff8c1a);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 60px;
+            width: 100%;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: 0.2s;
+        }
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+        .ref-link {
+            background: #f5f7fb;
+            border-radius: 60px;
+            padding: 10px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            text-align: center;
+            margin: 16px 0;
+        }
         .toast {
             position: fixed;
-            bottom: 85px;
-            left: 16px;
-            right: 16px;
-            background: #1f2c38;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #1e2f3e;
             color: white;
-            padding: 10px 14px;
-            border-radius: 44px;
+            padding: 12px 18px;
+            border-radius: 60px;
             text-align: center;
+            font-size: 0.8rem;
             z-index: 3000;
-            font-size: 0.75rem;
-            animation: slideUp 0.25s ease;
+            animation: fadeUp 0.25s ease;
         }
-        @keyframes slideUp {
+        @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        .live-ticker {
-            background: #0a141c;
-            color: #eef2ff;
-            padding: 6px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 0.65rem;
-        }
-        .ticker-scroll {
-            display: inline-block;
-            animation: tickerScroll 42s linear infinite;
-        }
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-46%); }
-        }
-        .pending-item {
-            background: #fffbf2;
-            border-radius: 22px;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            font-size: 0.75rem;
-        }
-        /* FULL WIDTH ADVERTISEMENT SLIDER - LARGER & PROMINENT */
-        .fullwidth-ad {
-            width: 100%;
-            margin-bottom: 18px;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-        }
-        .banner-slider {
-            position: relative;
-            width: 100%;
-            background: #e9ecef;
-        }
-        .slide-img {
-            width: 100%;
-            height: auto;
-            max-height: 200px;
-            object-fit: cover;
-            display: block;
-            image-rendering: crisp-edges;
-        }
-        .dots {
-            text-align: center;
-            margin-top: 8px;
-            margin-bottom: 4px;
-        }
-        .dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ccc;
-            margin: 0 4px;
-            cursor: pointer;
-        }
-        .dot.active { background: #ffb347; }
-        /* Second advertisement banner */
-        .ad-strip {
-            background: linear-gradient(95deg, #fff0e0, #ffe6cc);
-            border-radius: 28px;
-            padding: 14px;
-            margin-bottom: 18px;
-            text-align: center;
-            border: 1px solid #ffd9a5;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .ad-strip p {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #b45f06;
-        }
-        .ad-strip i {
-            font-size: 1.4rem;
-            color: #ffb347;
-            margin-right: 8px;
-            vertical-align: middle;
         }
     </style>
 </head>
 <body>
 
-<!-- AUTH SCREEN (unchanged) -->
-<div id="authScreen" class="auth-screen">
-    <div class="auth-card">
-        <i class="fas fa-chart-line" style="font-size:38px; color:#ffb347; margin-bottom:10px;"></i>
-        <h2>Nexora</h2>
-        <p>Login or create account</p>
-        <div id="loginForm">
-            <input type="email" id="loginEmail" placeholder="Email address">
-            <input type="password" id="loginPassword" placeholder="Password">
-            <button class="auth-btn" id="loginBtn">Login</button>
+<div class="reactivation-card">
+    <div class="card-header">
+        <div class="icon-badge">
+            <i class="fas fa-lock"></i>
         </div>
-        <div id="registerForm" style="display:none;">
-            <input type="text" id="regName" placeholder="Full name">
-            <input type="email" id="regEmail" placeholder="Email">
-            <input type="password" id="regPass" placeholder="Password">
-            <input type="password" id="regConfirm" placeholder="Confirm password">
-            <input type="text" id="regRefCode" placeholder="Referral code (optional)">
-            <button class="auth-btn" id="registerBtn">Register</button>
+        <h2>Nexora Capital</h2>
+        <div class="deactivated-tag">
+            <i class="fas fa-exclamation-triangle"></i> Account Deactivated
         </div>
-        <div class="toggle-link" id="toggleAuthLink">Create new account →</div>
+    </div>
+    <div class="message">
+        Your withdrawal capability is currently disabled.<br>
+        Reactivate your account by choosing one of the options below:
+    </div>
+
+    <div class="options">
+        <!-- Option 1: Add a Member -->
+        <div class="option-item" id="addMemberOption">
+            <div class="option-icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="option-content">
+                <div class="option-title">Add a Member</div>
+                <div class="option-desc">Invite a friend to join Nexora — instant reactivation</div>
+            </div>
+            <div class="arrow-icon"><i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <!-- Option 2: Minimum $100 Payment -->
+        <div class="option-item" id="paymentOption">
+            <div class="option-icon">
+                <i class="fab fa-solana"></i>
+            </div>
+            <div class="option-content">
+                <div class="option-title">Minimum $100 Payment</div>
+                <div class="option-desc">One‑time SOL payment to enable withdrawal</div>
+            </div>
+            <div class="arrow-icon"><i class="fas fa-chevron-right"></i></div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="secure-note">
+            <i class="fas fa-shield-alt"></i> Secure & instant &nbsp;•&nbsp; <i class="fas fa-clock"></i> Reactivation within 5 min
+        </div>
     </div>
 </div>
 
-<!-- MAIN APP -->
-<div id="mainApp" class="main-app">
-    <div class="app-header">
-        <div class="user-row">
-            <div class="greeting-wrapper"><div id="backButton" class="back-button" style="display:none;"><i class="fas fa-arrow-left"></i></div><span class="greeting-badge" id="greetingUser">⚡ Welcome, Earner</span></div>
-            <span class="active-badge" id="activeBadge">0 active</span>
+<!-- MODAL: Add Member -->
+<div id="addMemberModal" class="modal">
+    <div class="modal-container">
+        <span class="modal-close" onclick="closeModal('addMemberModal')">&times;</span>
+        <div class="modal-header">
+            <div class="modal-icon"><i class="fas fa-user-plus"></i></div>
+            <div class="modal-title">Invite a Member</div>
         </div>
-        <div class="balance-card"><div><div class="balance-number" id="mainBalance">$0.00</div><div style="font-size:0.6rem; opacity:0.7;">available balance</div></div><i class="fas fa-chart-line"></i></div>
-    </div>
-    <div class="live-ticker"><div class="ticker-scroll"><span>🔥 Nexora: Daily return 6-11% • 45 days cycle • Auto-credit 00:00 UTC &nbsp;&nbsp;|&nbsp;&nbsp;</span><span>💰 BTC: <span id="btcLivePrice">---</span> &nbsp; ETH: <span id="ethLivePrice">---</span> &nbsp;&nbsp;|&nbsp;&nbsp;</span><span>🏆 8% Referral • VIP 5% bonus (>$1000 deposit in 24h) &nbsp;&nbsp;|&nbsp;&nbsp;</span><span>🎁 $5 Signup • OTP via Telegram &nbsp;&nbsp;|&nbsp;&nbsp;</span></div></div>
-    <div style="padding:14px 12px; padding-bottom:70px;">
-        <div id="dashboardView">
-            <!-- FULL WIDTH ADVERTISEMENT SLIDER -->
-            <div class="fullwidth-ad">
-                <div class="banner-slider" id="bannerSlider">
-                    <img id="slideImg" class="slide-img" src="https://i.ibb.co/8LL7MbCW/8LL7MbCW.jpg" alt="Promo" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200?text=Click+right+>+copy+image+address'">
-                    <div class="dots" id="dotsContainer"></div>
-                </div>
-            </div>
-            <!-- Second full-width advertisement (static promo) -->
-            <div class="ad-strip">
-                <i class="fas fa-bullhorn"></i> <strong>🔥 LIMITED TIME OFFER:</strong> Get 20% extra bonus on first deposit! Use code <span style="background:#ffb34720; padding:4px 8px; border-radius:20px;">NEXORA20</span>
-            </div>
-            <div class="card-premium">
-                <div class="stat-row"><span><i class="fas fa-chart-line" style="color:#ffb347;"></i> Today's estimated</span><strong id="todayEstimate" style="font-size:1.1rem;">$0.00</strong></div>
-                <div class="stat-row"><span><i class="fas fa-wallet"></i> Available balance</span><strong id="availableBalance">$0.00</strong></div>
-                <div class="stat-row"><span><i class="fas fa-layer-group"></i> Active investments</span><strong id="activeInvestCount">0</strong></div>
-                <button class="btn-gold" onclick="openDepositModal()"><i class="fas fa-plus-circle"></i> Deposit Funds</button>
-                <div style="display:flex; gap:8px; margin-top:12px;"><button class="btn-outline" style="flex:1;" onclick="openWithdrawModal()">Withdraw</button><button class="btn-outline" style="flex:1;" onclick="logoutUser()">Logout</button></div>
-            </div>
-            <div class="card-premium"><h4 style="display:flex; gap:6px; font-size:0.85rem;"><i class="fas fa-bolt" style="color:#ffb347;"></i> Today's highlights</h4><div class="offer-badge"><i class="fas fa-chart-line"></i> <strong>🔥 Up to 11% daily ROI</strong> – double capital every 9 days</div><div class="offer-badge"><i class="fas fa-gem"></i> <strong>VIP 5% boost</strong> – Deposit >$1000 in 24h & get +5% extra on VIP plan</div><div class="offer-badge"><i class="fab fa-telegram"></i> <strong>24/7 OTP support</strong> – Tap Telegram icon for agent</div></div>
-            <div class="card-premium"><h4 style="font-size:0.85rem;"><i class="fas fa-history"></i> My active packs</h4><div id="activePacksList" style="margin-top:6px;">✨ No active packs</div></div>
-            <div class="card-premium"><h4 style="font-size:0.85rem;"><i class="fas fa-building"></i> About Nexora</h4><p style="font-size:0.7rem;">Licensed platform • AI quant strategies • Daily profits 6-11% • 45 days contract. Trusted by 27k+ investors worldwide.</p></div>
-        </div>
-        <div id="investView" style="display:none;"><h3 style="margin-bottom:10px; font-size:1.1rem;">✨ VIP earning plans</h3><div id="plansListContainer"></div><div class="footer-note" style="text-align:center; margin-top:10px; font-size:0.65rem;">Daily profit credited at 00:00 UTC</div></div>
-        <div id="referView" style="display:none;"><div class="card-premium"><h4><i class="fas fa-users"></i> Referral 8% lifetime</h4><div style="display:flex; gap:8px; margin:12px 0;"><input type="text" id="referralLinkField" readonly><button class="btn-outline" onclick="copyReferralCode()" style="padding:6px 10px;">Copy</button></div><div class="stat-row"><span>👥 Referrals</span><span id="totalReferralsCount">0</span></div><div class="stat-row"><span>💰 Commission earned</span><span id="commissionEarned">$0.00</span></div></div></div>
-        <div id="profileView" style="display:none;"><div class="card-premium"><h4><i class="fas fa-user-astronaut"></i> My Profile</h4><div class="stat-row"><span>Full name</span><strong id="profileName">-</strong></div><div class="stat-row"><span>Email</span><strong id="profileEmail">-</strong></div><div class="stat-row"><span>Referral code</span><strong id="profileRefCode">-</strong></div><div class="stat-row"><span>Total invested</span><strong id="profileTotalInvested">$0</strong></div><div class="stat-row"><span>Total earned</span><strong id="profileTotalEarned">$0</strong></div></div><div class="card-premium"><h4>📋 Deposit History</h4><div id="depositHistoryList">No deposits</div></div><div class="card-premium"><h4>📤 Withdrawal History</h4><div id="withdrawHistoryList">No withdrawals</div></div></div>
-    </div>
-    <div class="bottom-nav"><div class="nav-item" data-nav="dashboard" id="navHome"><i class="fas fa-home"></i><span>Home</span></div><div class="nav-item" data-nav="invest" id="navEarn"><i class="fas fa-chart-line"></i><span>Earn</span></div><div class="nav-item" data-nav="refer" id="navRefer"><i class="fas fa-user-friends"></i><span>Refer</span></div><div class="nav-item" data-nav="profile" id="navProfile"><i class="fas fa-user"></i><span>Profile</span></div></div>
-</div>
-<div class="telegram-support" id="telegramSupportBtn" style="display:none;"><i class="fab fa-telegram-plane"></i></div>
-
-<!-- MODALS (deposit, withdraw, otp) -->
-<div id="depositModal" class="modal">
-    <div class="modal-card">
-        <span class="modal-close" onclick="closeModal('depositModal')">&times;</span>
-        <h3><i class="fas fa-coins" style="color:#ffb347;"></i> Crypto Deposit</h3>
-        <div id="methodOptions">
-            <div class="method-chip" data-method="TRC20">TRC20</div><div class="method-chip" data-method="SOL">SOL</div>
-            <div class="method-chip" data-method="ERC20">ERC20</div><div class="method-chip" data-method="BTC">BTC</div>
-            <div class="method-chip" data-method="BEP20">BEP20</div>
-        </div>
-        <div class="qr-box"><img id="qrDepositImg" class="qr-img" src="https://i.postimg.cc/RFxxWBfr/TRC20.jpg" alt="QR"></div>
-        <input type="number" id="depositAmountInput" placeholder="Amount USD (min $50)" value="100">
-        <input type="text" id="userWalletInput" placeholder="Your wallet address">
-        <input type="file" id="slipImageInput" accept="image/*">
-        <button class="btn-gold" id="submitDepositBtn">Submit Deposit Request</button>
-        <div class="footer-note" style="margin-top:10px; font-size:0.65rem;">After submit, contact agent via Telegram to receive OTP code (6h expiry).</div>
+        <p style="font-size:0.8rem; text-align:center; color:#5a6e7c;">Share your unique referral link. When they sign up, your account will be reactivated immediately.</p>
+        <div class="ref-link" id="referralLinkDisplay">https://nexora.com/ref/...</div>
+        <button class="btn-copy" id="copyReferralBtn" style="display:block; margin:0 auto;"><i class="fas fa-copy"></i> Copy Link</button>
+        <button class="btn-action" id="simulateMemberBtn">✅ I have added a member (activate now)</button>
+        <p style="font-size:0.65rem; text-align:center; margin-top:16px;">After member registers, withdrawal will be enabled instantly.</p>
     </div>
 </div>
 
-<div id="withdrawModal" class="modal"><div class="modal-card"><span class="modal-close" onclick="closeModal('withdrawModal')">&times;</span><h3>Withdraw funds</h3><select id="withdrawMethodSelect"><option>USDT-TRC20</option><option>BTC</option><option>SOL</option></select><input type="text" id="withdrawAddress" placeholder="Your withdrawal address"><input type="number" id="withdrawAmount" placeholder="Amount USD (min $20)"><button class="btn-gold" id="submitWithdrawBtn">Request Withdrawal</button></div></div>
-<div id="otpModal" class="modal"><div class="modal-card"><span class="modal-close" onclick="closeModal('otpModal')">&times;</span><h3>🔐 Confirm with OTP</h3><p>Enter 6-digit code from Telegram agent</p><input type="text" id="otpCodeInput" placeholder="XXXXXX" maxlength="6"><input type="hidden" id="otpType" value=""><input type="hidden" id="otpItemId" value=""><button class="btn-gold" onclick="verifyOtpCode()">Verify & Complete</button></div></div>
+<!-- MODAL: SOL Payment -->
+<div id="paymentModal" class="modal">
+    <div class="modal-container">
+        <span class="modal-close" onclick="closeModal('paymentModal')">&times;</span>
+        <div class="modal-header">
+            <div class="modal-icon"><i class="fab fa-solana"></i></div>
+            <div class="modal-title">Activate with SOL</div>
+        </div>
+        <p style="font-size:0.8rem; text-align:center;">Send <strong>minimum $100</strong> (in SOL) to the address below</p>
+        <div class="qr-wrapper">
+            <img id="solQr" class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=SolanaAddressNexora9xQpVkY7m3n2b8c" alt="SOL QR">
+        </div>
+        <div class="address-box">
+            <span id="solAddress">SolanaAddressNexora9xQpVkY7m3n2b8c</span>
+        </div>
+        <button class="btn-copy" id="copySolBtn" style="display:block; margin:0 auto;"><i class="fas fa-copy"></i> Copy Address</button>
+        <button class="btn-action" id="confirmPaymentBtn">✅ I have completed the payment</button>
+        <p style="font-size:0.65rem; text-align:center; margin-top:16px;">Agent will verify and reactivate your account within minutes. Withdrawal will be enabled.</p>
+    </div>
+</div>
+
 <div id="toastContainer"></div>
 
 <script>
-    // ========== COMPLETE BACKEND (full persistent features) ==========
-    let currentUser = JSON.parse(localStorage.getItem('nexora_user')) || null;
-    let usersDB = JSON.parse(localStorage.getItem('nexora_users')) || [];
-    let depositsDB = JSON.parse(localStorage.getItem('nexora_deposits')) || [];
-    let withdrawalsDB = JSON.parse(localStorage.getItem('nexora_withdrawals')) || [];
-    let investmentsDB = JSON.parse(localStorage.getItem('nexora_investments')) || [];
-    let referralCommissionsDB = JSON.parse(localStorage.getItem('nexora_commissions')) || [];
-    let dailyProfitLog = JSON.parse(localStorage.getItem('nexora_daily_profit')) || {};
-
-    // OTP lists (150 each)
-    const depositOtpList = [610394,725918,384207,998451,163780,540926,871305,296840,759132,408967,931650,274608,685319,120587,947206,356019,802734,519860,673295,240981,918472,365704,780215,439806,102958,667401,895230,314679,560218,972840,238915,741603,509872,186430,834915,290761,657308,913425,470986,125790,688241,903617,352890,746195,510384,829067,194802,567931,308745,960218,421597,785036,139864,602971,857430,274159,918503,346720,650918,782604,119385,503792,864107,297560,941832,365019,708426,152980,689345,430917,975206,218694,560173,804921,379650,126784,953810,642097,285430,817965,430268,709154,196837,584029,930751,263480,715906,408312,987640,152739,660184,394720,871509,205638,948176,317490,682305,590742,134908,867230,459671,720985,306514,981627,243590,675804,890216,154739,607182,439750,972531,285690,816402,390817,657904,124860,908573,346915,780264,512937,869041,230758,695120,418936,907264,153809,674291,820735,395016,781490,246803,960574,517328,803961,129570,684320,950816,437209,762154,309685,891042];
-    const withdrawOtpList = [482915,739204,105678,864390,291746,557103,903418,628591,160394,772815,590247,318960,884512,203781,667390,951264,440918,729053,106845,583920,914607,350178,778496,261903,845720,109634,667125,394880,520971,981346,237590,664218,803975,159402,742681,508913,916370,274859,630195,885047,120964,459731,773860,304592,918405,667293,250781,839164,401927,578630,990215,346708,712594,185036,609471,833260,274915,960843,518207,347690,802519,176403,954781,620394,381759,709426,145980,886231,532907,417860,960512,273804,648195,905372,318746,774905,203519,589406,661832,147690,920573,385019,704682,156937,889204,532618,470951,816304,239587,605918,974260,318905,742610,560438,129674,883501,406972,751308,290516,669843,135790,804621,972435,318670,560192,447805,910236,263947,785104,609328,174690,832751,490615,356902,781463,205978,964310,538027,417692,809541,260735,995120,346871,712509,580346,193780,864295,427061,905418,318670,760195];
-    let usedDepositCodes = JSON.parse(localStorage.getItem('used_deposit_codes')) || [];
-    let usedWithdrawCodes = JSON.parse(localStorage.getItem('used_withdraw_codes')) || [];
-
-    function isCodeAvailable(type, code) { if(type==='deposit') return !usedDepositCodes.includes(code) && depositOtpList.includes(Number(code)); else return !usedWithdrawCodes.includes(code) && withdrawOtpList.includes(Number(code)); }
-    function markCodeUsed(type, code) { if(type==='deposit') { if(!usedDepositCodes.includes(code)) usedDepositCodes.push(code); localStorage.setItem('used_deposit_codes',JSON.stringify(usedDepositCodes)); } else { if(!usedWithdrawCodes.includes(code)) usedWithdrawCodes.push(code); localStorage.setItem('used_withdraw_codes',JSON.stringify(usedWithdrawCodes)); } }
-    function autoCancelExpiredRequests() { const sixHoursAgo=Date.now()-6*60*60*1000; let changed=false; depositsDB.forEach(d=>{ if(d.status==='pending' && new Date(d.createdAt).getTime()<sixHoursAgo){ d.status='cancelled'; changed=true; } }); withdrawalsDB.forEach(w=>{ if(w.status==='pending' && new Date(w.createdAt).getTime()<sixHoursAgo){ w.status='cancelled'; changed=true; } }); if(changed){ saveAll(); refreshUI(); } }
-    function saveAll() { localStorage.setItem('nexora_users',JSON.stringify(usersDB)); localStorage.setItem('nexora_deposits',JSON.stringify(depositsDB)); localStorage.setItem('nexora_withdrawals',JSON.stringify(withdrawalsDB)); localStorage.setItem('nexora_investments',JSON.stringify(investmentsDB)); localStorage.setItem('nexora_commissions',JSON.stringify(referralCommissionsDB)); localStorage.setItem('nexora_daily_profit',JSON.stringify(dailyProfitLog)); if(currentUser) localStorage.setItem('nexora_user',JSON.stringify(currentUser)); else localStorage.removeItem('nexora_user'); }
-    function showToast(msg) { let d=document.createElement('div'); d.className='toast'; d.innerText=msg; document.getElementById('toastContainer').appendChild(d); setTimeout(()=>d.remove(),3500); }
-
-    let showLogin=true; const toggleLink=document.getElementById('toggleAuthLink'); const loginFormDiv=document.getElementById('loginForm'); const registerFormDiv=document.getElementById('registerForm');
-    toggleLink.addEventListener('click',()=>{ showLogin=!showLogin; if(showLogin){ loginFormDiv.style.display='block'; registerFormDiv.style.display='none'; toggleLink.innerText='Create new account →'; } else { loginFormDiv.style.display='none'; registerFormDiv.style.display='block'; toggleLink.innerText='← Back to Login'; } });
-    document.getElementById('loginBtn').addEventListener('click',()=>{ let email=document.getElementById('loginEmail').value, pwd=document.getElementById('loginPassword').value; let user=usersDB.find(u=>u.email===email && u.password===pwd); if(user){ currentUser={...user}; saveAll(); document.getElementById('authScreen').classList.add('hidden'); document.getElementById('mainApp').classList.add('visible'); document.querySelector('.telegram-support').style.display='flex'; refreshUI(); showToast(`Welcome back, ${user.fullname}`); } else showToast("Invalid credentials"); });
-    document.getElementById('registerBtn').addEventListener('click',()=>{ let name=document.getElementById('regName').value, email=document.getElementById('regEmail').value, pwd=document.getElementById('regPass').value, conf=document.getElementById('regConfirm').value, refCode=document.getElementById('regRefCode').value; if(!name||!email||!pwd||!conf) return showToast("All fields required"); if(pwd!==conf) return showToast("Passwords mismatch"); if(usersDB.find(u=>u.email===email)) return showToast("Email exists"); let referrer=refCode?usersDB.find(u=>u.refCode===refCode):null; let newUser={ id:Date.now(), fullname:name, email, password:pwd, balance:5, refCode:Math.random().toString(36).substring(2,12).toUpperCase(), referredBy:referrer?referrer.id:null, purchasedPlans:[], last24hDeposit:0, vipBonusUsed:false }; usersDB.push(newUser); currentUser=newUser; saveAll(); document.getElementById('authScreen').classList.add('hidden'); document.getElementById('mainApp').classList.add('visible'); document.querySelector('.telegram-support').style.display='flex'; refreshUI(); showToast("✅ Account created! +$5 bonus"); });
-    function logoutUser() { currentUser=null; saveAll(); document.getElementById('authScreen').classList.remove('hidden'); document.getElementById('mainApp').classList.remove('visible'); document.querySelector('.telegram-support').style.display='none'; showToast("Logged out"); }
-
-    function updateLast24hDeposit(){ if(!currentUser) return; let oneDayAgo=Date.now()-24*60*60*1000; let recent=depositsDB.filter(d=>d.userId===currentUser.id && d.status==='approved' && d.createdAt && new Date(d.createdAt).getTime()>oneDayAgo); currentUser.last24hDeposit=recent.reduce((s,d)=>s+d.amount,0); saveAll(); }
-    function canGetVipBonus(){ return currentUser && currentUser.last24hDeposit>=1000 && !currentUser.vipBonusUsed; }
-    function useVipBonus(planAmount){ if(canGetVipBonus()){ let bonus=planAmount*0.05; currentUser.balance=(currentUser.balance||0)+bonus; currentUser.vipBonusUsed=true; saveAll(); showToast(`🎉 VIP Bonus: +$${bonus.toFixed(2)} (5% of VIP plan)`); return true; } return false; }
-
-    function submitDepositRequest(){ if(!currentUser){ logoutUser(); return; } let amount=parseFloat(document.getElementById('depositAmountInput').value); if(amount<50) return showToast("Min deposit $50"); let wallet=document.getElementById('userWalletInput').value; if(!wallet) return showToast("Enter wallet address"); let slipFile=document.getElementById('slipImageInput').files[0]; if(!slipFile) return showToast("Upload payment slip"); let reader=new FileReader(); reader.onload=function(e){ let deposit={ id:Date.now(), userId:currentUser.id, amount, method:currentSelectedMethod, userWallet:wallet, slipData:e.target.result, status:'pending', createdAt:new Date().toISOString() }; depositsDB.push(deposit); saveAll(); let msg=`🔔 NEW DEPOSIT REQUEST%0AUser: ${currentUser.fullname}%0AAmount: $${amount}%0AMethod: ${currentSelectedMethod}%0AWallet: ${wallet}%0ADeposit ID: ${deposit.id}`; window.open(`https://t.me/Nexora_Agent1?text=${msg}`,'_blank'); showToast("✅ Request sent! Contact agent on Telegram for OTP."); closeModal('depositModal'); document.getElementById('userWalletInput').value=''; document.getElementById('depositAmountInput').value='100'; document.getElementById('slipImageInput').value=''; refreshUI(); }; reader.readAsDataURL(slipFile); }
-    function submitWithdrawRequest(){ if(!currentUser){ logoutUser(); return; } let addr=document.getElementById('withdrawAddress').value; let amt=parseFloat(document.getElementById('withdrawAmount').value); if(!addr || amt<20) return showToast("Min $20 and valid address"); if((currentUser.balance||0)<amt) return showToast("Insufficient balance"); let withdrawal={ id:Date.now(), userId:currentUser.id, address:addr, amount:amt, method:document.getElementById('withdrawMethodSelect').value, status:'pending', createdAt:new Date().toISOString() }; withdrawalsDB.push(withdrawal); saveAll(); let msg=`📤 NEW WITHDRAWAL REQUEST%0AUser: ${currentUser.fullname}%0AAmount: $${amt}%0AMethod: ${withdrawal.method}%0AAddress: ${addr}%0AID: ${withdrawal.id}`; window.open(`https://t.me/Nexora_Agent1?text=${msg}`,'_blank'); showToast("✅ Withdrawal request sent! Agent will provide OTP."); closeModal('withdrawModal'); refreshUI(); }
-    function openOtpModal(type,itemId){ document.getElementById('otpType').value=type; document.getElementById('otpItemId').value=itemId; document.getElementById('otpModal').style.display='flex'; }
-    function verifyOtpCode(){ let type=document.getElementById('otpType').value; let itemId=parseInt(document.getElementById('otpItemId').value); let code=document.getElementById('otpCodeInput').value.trim(); if(!code || code.length!==6) return showToast("Enter 6-digit code"); let target=(type==='deposit')?depositsDB.find(d=>d.id===itemId && d.userId===currentUser.id):withdrawalsDB.find(w=>w.id===itemId && w.userId===currentUser.id); if(!target) return showToast("Request not found"); if(target.status!=='pending') return showToast(`Request already ${target.status}`); let now=Date.now(); if(now-new Date(target.createdAt).getTime()>6*60*60*1000){ target.status='cancelled'; saveAll(); refreshUI(); return showToast("Request expired (6h)."); } if(type==='deposit'){ if(!isCodeAvailable('deposit',Number(code))) return showToast("Invalid or used OTP"); target.status='approved'; markCodeUsed('deposit',Number(code)); currentUser.balance=(currentUser.balance||0)+target.amount; updateLast24hDeposit(); if(currentUser.referredBy){ let ref=usersDB.find(u=>u.id===currentUser.referredBy); if(ref){ let comm=target.amount*0.08; ref.balance=(ref.balance||0)+comm; referralCommissionsDB.push({ userId:ref.id, amount:comm, source:currentUser.email }); saveAll(); } } saveAll(); refreshUI(); showToast(`✅ Deposit $${target.amount} approved!`); } else { if(!isCodeAvailable('withdraw',Number(code))) return showToast("Invalid or used OTP"); if((currentUser.balance||0)<target.amount) return showToast("Insufficient balance"); target.status='approved'; markCodeUsed('withdraw',Number(code)); currentUser.balance-=target.amount; saveAll(); refreshUI(); showToast(`💰 Withdrawal $${target.amount} approved!`); } closeModal('otpModal'); document.getElementById('otpCodeInput').value=''; }
-
-    const PLANS=[{id:1,name:"VIP 1",amount:20,duration:45},{id:2,name:"VIP 2",amount:82,duration:45},{id:3,name:"VIP 3",amount:350,duration:45},{id:4,name:"VIP 4",amount:555,duration:45},{id:5,name:"VIP 5",amount:1111,duration:45},{id:6,name:"VIP 6",amount:2500,duration:60,coming:true}];
-    function renderPlans(){ let container=document.getElementById('plansListContainer'); if(!container) return; let purchased=currentUser?.purchasedPlans||[]; container.innerHTML=PLANS.map(plan=>{ if(plan.coming) return `<div class="vip-card"><strong>${plan.name}</strong> <span>$${plan.amount}+</span><div>🔜 Soon</div></div>`; let bought=purchased.includes(plan.name); return `<div class="vip-card"><div><b>${plan.name}</b> <span>$${plan.amount}</span></div><div style="font-size:0.7rem;">📆 ${plan.duration} days • daily 6-11%</div>${!bought?`<button class="btn-gold" style="margin-top:6px; padding:6px;" onclick="buyPlan(${plan.amount},'${plan.name}')">Invest now</button>`:`<button disabled class="btn-outline" style="width:100%;">Active</button>`}</div>`; }).join(''); }
-    function buyPlan(amount,planName){ if(!currentUser) return; if(currentUser.purchasedPlans?.includes(planName)) return showToast("Already purchased"); if((currentUser.balance||0)<amount) return showToast("Insufficient balance"); currentUser.balance-=amount; if(!currentUser.purchasedPlans) currentUser.purchasedPlans=[]; currentUser.purchasedPlans.push(planName); let usedBonus=useVipBonus(amount); investmentsDB.push({ id:Date.now(), userId:currentUser.id, plan:planName, amount, startDate:new Date(), status:'active', profitEarned:0 }); saveAll(); refreshUI(); showToast(`Invested $${amount} in ${planName}! ${usedBonus?'5% bonus added.':''}`); }
-    function loadReferralStats(){ if(!currentUser) return; let link=`https://nexora.app/ref/${currentUser.refCode}`; document.getElementById('referralLinkField').value=link; let refs=usersDB.filter(u=>u.referredBy===currentUser.id).length; let comm=referralCommissionsDB.filter(c=>c.userId===currentUser.id).reduce((s,c)=>s+(c.amount||0),0); document.getElementById('totalReferralsCount').innerText=refs; document.getElementById('commissionEarned').innerHTML=`$${comm.toFixed(2)}`; }
-    function copyReferralCode(){ let inp=document.getElementById('referralLinkField'); inp.select(); document.execCommand('copy'); showToast("Copied!"); }
-    function loadProfileData(){ if(!currentUser) return; document.getElementById('profileName').innerText=currentUser.fullname; document.getElementById('profileEmail').innerText=currentUser.email; document.getElementById('profileRefCode').innerText=currentUser.refCode; let totalInv=investmentsDB.filter(i=>i.userId===currentUser.id).reduce((s,i)=>s+i.amount,0); let totalEarn=investmentsDB.filter(i=>i.userId===currentUser.id).reduce((s,i)=>s+(i.profitEarned||0),0); document.getElementById('profileTotalInvested').innerHTML=`$${totalInv.toFixed(2)}`; document.getElementById('profileTotalEarned').innerHTML=`$${totalEarn.toFixed(2)}`; }
-    function loadHistory(){ if(!currentUser) return; let userDeposits=depositsDB.filter(d=>d.userId===currentUser.id).sort((a,b)=>b.id-a.id); let depHtml=userDeposits.map(d=>`<div class="pending-item"><div><strong>$${d.amount}</strong> ${d.method}<br><small>${d.status==='pending'?'⏳ PENDING':d.status==='approved'?'✅ Approved':d.status==='cancelled'?'❌ Cancelled':'❌'}</small></div>${d.status==='pending'?`<button class="btn-outline" style="padding:4px 10px;" onclick="openOtpModal('deposit',${d.id})">Confirm</button>`:''}</div>`).join(''); document.getElementById('depositHistoryList').innerHTML=depHtml||"No deposits"; let userWithdraws=withdrawalsDB.filter(w=>w.userId===currentUser.id); let wdHtml=userWithdraws.map(w=>`<div class="pending-item"><div>$${w.amount} - ${w.status}</div>${w.status==='pending'?`<button class="btn-outline" onclick="openOtpModal('withdraw',${w.id})">Confirm</button>`:''}</div>`).join(''); document.getElementById('withdrawHistoryList').innerHTML=wdHtml||"No withdrawals"; }
-    function applyDailyProfit(){ if(!currentUser) return; let today=new Date().toDateString(); if(dailyProfitLog[currentUser.id]===today) return; let active=investmentsDB.filter(i=>i.userId===currentUser.id && i.status==='active'); if(active.length===0) return; let total=0; active.forEach(inv=>{ let percent=Math.random()*(0.11-0.06)+0.06; let gain=inv.amount*percent; inv.profitEarned=(inv.profitEarned||0)+gain; currentUser.balance=(currentUser.balance||0)+gain; total+=gain; }); if(total>0){ dailyProfitLog[currentUser.id]=today; saveAll(); refreshUI(); showToast(`📈 Daily profit: +$${total.toFixed(2)}`); } }
-    async function updatePrices(){ try{ let res=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd'); let data=await res.json(); document.getElementById('btcLivePrice').innerText=`$${data.bitcoin.usd.toLocaleString()}`; document.getElementById('ethLivePrice').innerText=`$${data.ethereum.usd.toLocaleString()}`; }catch(e){} }
-    let currentView='dashboard';
-    function setActiveView(view){ currentView=view; document.getElementById('dashboardView').style.display=view==='dashboard'?'block':'none'; document.getElementById('investView').style.display=view==='invest'?'block':'none'; document.getElementById('referView').style.display=view==='refer'?'block':'none'; document.getElementById('profileView').style.display=view==='profile'?'block':'none'; document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); if(view==='dashboard') document.getElementById('navHome').classList.add('active'); else if(view==='invest') document.getElementById('navEarn').classList.add('active'); else if(view==='refer') document.getElementById('navRefer').classList.add('active'); else if(view==='profile') document.getElementById('navProfile').classList.add('active'); if(view==='profile' && currentUser){ loadProfileData(); loadHistory(); } const backBtn=document.getElementById('backButton'); if(backBtn) backBtn.style.display=(view==='dashboard')?'none':'flex'; }
-    document.getElementById('backButton').addEventListener('click',()=>{ setActiveView('dashboard'); });
-    function refreshUI(){ if(currentUser){ let bal=currentUser.balance||0; document.getElementById('mainBalance').innerText=`$${bal.toFixed(2)}`; document.getElementById('greetingUser').innerHTML=`⚡ Hi, ${currentUser.fullname?.split(' ')[0]||currentUser.email.split('@')[0]}`; document.getElementById('availableBalance').innerText=`$${bal.toFixed(2)}`; let activeInv=investmentsDB.filter(i=>i.userId===currentUser.id && i.status==='active'); document.getElementById('activeBadge').innerText=`${activeInv.length} active`; document.getElementById('activeInvestCount').innerText=activeInv.length; let dailyEst=activeInv.reduce((s,i)=>s+(i.amount*0.085),0); document.getElementById('todayEstimate').innerHTML=`$${dailyEst.toFixed(2)}`; let html=activeInv.map(i=>`<div style="background:#f8fafc;border-radius:20px;padding:8px;margin-bottom:6px;">${i.plan} - $${i.amount} | daily 6-11%</div>`).join(''); document.getElementById('activePacksList').innerHTML=html||"✨ No active packs"; renderPlans(); loadReferralStats(); loadProfileData(); loadHistory(); } setActiveView(currentView); }
-    function openDepositModal(){ if(!currentUser){ logoutUser(); return; } initChips(); document.getElementById('depositModal').style.display='flex'; }
-    function openWithdrawModal(){ if(!currentUser){ logoutUser(); return; } document.getElementById('withdrawModal').style.display='flex'; }
-    function closeModal(id){ document.getElementById(id).style.display='none'; }
-    const METHOD_QR_MAP={ TRC20:"https://i.postimg.cc/RFxxWBfr/TRC20.jpg", SOL:"https://i.postimg.cc/W1xQyv50/SOLONA.jpg", ERC20:"https://i.postimg.cc/Kj9WDSKB/ERC20.jpg", BTC:"https://i.postimg.cc/6Qd11G7F/BTC.jpg", BEP20:"https://i.postimg.cc/Y0yXm6V1/BEP20.jpg" };
-    let currentSelectedMethod="TRC20";
-    function initChips(){ document.querySelectorAll('.method-chip').forEach(chip=>{ chip.onclick=()=>{ document.querySelectorAll('.method-chip').forEach(c=>c.classList.remove('active')); chip.classList.add('active'); let m=chip.getAttribute('data-method'); if(METHOD_QR_MAP[m]) document.getElementById('qrDepositImg').src=METHOD_QR_MAP[m]; currentSelectedMethod=m; }; }); document.querySelector('.method-chip')?.click(); }
-    document.getElementById('navHome').onclick=()=>{ if(currentUser) setActiveView('dashboard'); else logoutUser(); };
-    document.getElementById('navEarn').onclick=()=>{ if(currentUser) setActiveView('invest'); else logoutUser(); };
-    document.getElementById('navRefer').onclick=()=>{ if(currentUser) setActiveView('refer'); else logoutUser(); };
-    document.getElementById('navProfile').onclick=()=>{ if(currentUser) setActiveView('profile'); else logoutUser(); };
-    document.getElementById('telegramSupportBtn').onclick=()=>{ window.open('https://t.me/Nexora_Agent1','_blank'); };
-    document.getElementById('submitDepositBtn').onclick=submitDepositRequest;
-    document.getElementById('submitWithdrawBtn').onclick=submitWithdrawRequest;
-    setInterval(()=>{ if(currentUser) applyDailyProfit(); },63000);
-    setInterval(updatePrices,35000);
-    setInterval(()=>{ autoCancelExpiredRequests(); },60000);
-    updatePrices();
-    if(currentUser){ document.getElementById('authScreen').classList.add('hidden'); document.getElementById('mainApp').classList.add('visible'); document.querySelector('.telegram-support').style.display='flex'; refreshUI(); } else { document.getElementById('authScreen').classList.remove('hidden'); document.getElementById('mainApp').classList.remove('visible'); document.querySelector('.telegram-support').style.display='none'; }
-    setActiveView('dashboard');
-
-    // ========== FULL WIDTH SLIDER (2 images, auto rotate) ==========
-    const images = [
-        "https://i.ibb.co/8LL7MbCW/8LL7MbCW.jpg",
-        "https://i.ibb.co/TBRcx6K5/TBRcx6K5.jpg"
-    ];
-    const fallbackPlaceholder = "https://via.placeholder.com/400x200?text=Click+right+>+copy+image+address";
-    let currentSlide = 0;
-    const slideImg = document.getElementById("slideImg");
-    const dotsContainer = document.getElementById("dotsContainer");
-
-    function updateSlider(index) {
-        slideImg.src = images[index];
-        slideImg.onerror = function() { slideImg.src = fallbackPlaceholder; slideImg.onerror = null; };
-        document.querySelectorAll(".dot").forEach((dot, i) => dot.classList.toggle("active", i === index));
+    // Helper
+    function showToast(msg) {
+        let t = document.createElement('div');
+        t.className = 'toast';
+        t.innerText = msg;
+        document.getElementById('toastContainer').appendChild(t);
+        setTimeout(() => t.remove(), 3500);
     }
-    function createDots() {
-        dotsContainer.innerHTML = "";
-        for (let i = 0; i < images.length; i++) {
-            const dot = document.createElement("span");
-            dot.classList.add("dot");
-            if (i === currentSlide) dot.classList.add("active");
-            dot.addEventListener("click", () => { currentSlide = i; updateSlider(currentSlide); resetInterval(); });
-            dotsContainer.appendChild(dot);
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    // Open modals
+    document.getElementById('addMemberOption').addEventListener('click', () => {
+        document.getElementById('addMemberModal').style.display = 'flex';
+    });
+    document.getElementById('paymentOption').addEventListener('click', () => {
+        document.getElementById('paymentModal').style.display = 'flex';
+    });
+
+    // Referral link generation (demo)
+    let referralCode = localStorage.getItem('nex_ref_code');
+    if (!referralCode) {
+        referralCode = 'NEX' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        localStorage.setItem('nex_ref_code', referralCode);
+    }
+    document.getElementById('referralLinkDisplay').innerText = `https://nexora.com/ref/${referralCode}`;
+
+    // Copy referral link
+    document.getElementById('copyReferralBtn').addEventListener('click', () => {
+        let link = document.getElementById('referralLinkDisplay').innerText;
+        navigator.clipboard.writeText(link);
+        showToast('✅ Referral link copied');
+    });
+
+    // Simulate member added
+    document.getElementById('simulateMemberBtn').addEventListener('click', () => {
+        showToast('👥 Member added! Your account is now reactivated and withdrawal is enabled.');
+        closeModal('addMemberModal');
+    });
+
+    // Copy Solana address
+    document.getElementById('copySolBtn').addEventListener('click', () => {
+        let addr = document.getElementById('solAddress').innerText;
+        navigator.clipboard.writeText(addr);
+        showToast('✅ SOL address copied');
+    });
+
+    // Payment confirmation
+    document.getElementById('confirmPaymentBtn').addEventListener('click', () => {
+        showToast('📤 Payment submitted. Agent will verify and reactivate your account. Withdrawal enabled soon.');
+        closeModal('paymentModal');
+        setTimeout(() => {
+            showToast('🎉 Your account has been reactivated! You can now withdraw.');
+        }, 2500);
+    });
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        if (event.target.classList && event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
         }
     }
-    let intervalId;
-    function startInterval() { intervalId = setInterval(() => { currentSlide = (currentSlide + 1) % images.length; updateSlider(currentSlide); }, 4000); }
-    function resetInterval() { clearInterval(intervalId); startInterval(); }
-    createDots();
-    updateSlider(0);
-    startInterval();
 </script>
 </body>
 </html>
